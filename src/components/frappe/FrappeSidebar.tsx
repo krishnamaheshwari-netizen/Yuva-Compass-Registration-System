@@ -3,7 +3,11 @@ import { Search, ChevronRight, ChevronDown } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 export function FrappeSidebar() {
   const location = useLocation();
-  const [expandedSections, setExpandedSections] = useState<string[]>(['main']);
+  const [expandedSections, setExpandedSections] = useState<string[]>([
+  'home',
+  'people',
+  'programmes']
+  );
   const toggleSection = (section: string) => {
     setExpandedSections((prev) =>
     prev.includes(section) ?
@@ -13,39 +17,55 @@ export function FrappeSidebar() {
   };
   const sections = [
   {
-    id: 'main',
-    label: 'Main',
+    id: 'home',
+    label: 'Home',
     items: [
     {
       label: 'Dashboard',
       path: '/'
+    }]
+
+  },
+  {
+    id: 'people',
+    label: 'People',
+    items: [
+    {
+      label: 'Leads',
+      path: '/leads'
     },
     {
       label: 'Candidates',
       path: '/candidates'
     },
     {
-      label: 'Leads',
-      path: '/leads'
+      label: 'Registration',
+      path: '/candidates/new'
     }]
 
   },
   {
-    id: 'operations',
-    label: 'Operations',
+    id: 'programmes',
+    label: 'Programmes',
     items: [
     {
-      label: 'Batches',
+      label: 'Foundation Batches',
       path: '/batches'
-    },
-    {
-      label: 'Cohorting',
-      path: '/cohorting'
     },
     {
       label: 'Consultations',
       path: '/consultations'
     },
+    {
+      label: 'Cohorting',
+      path: '/cohorting'
+    }]
+
+  },
+  {
+    id: 'finance',
+    label: 'Finance',
+    items: [
     {
       label: 'Invoices',
       path: '/invoices'
@@ -114,7 +134,10 @@ export function FrappeSidebar() {
               {isExpanded &&
               <nav className="px-2 space-y-0.5 mt-0.5">
                   {section.items.map((item) => {
-                  const isActive = location.pathname === item.path;
+                  const isActive =
+                  location.pathname === item.path ||
+                  item.path !== '/' &&
+                  location.pathname.startsWith(item.path);
                   return (
                     <Link
                       key={item.path}

@@ -90,7 +90,7 @@ export function LeadsPage() {
         }
         primaryAction={{
           label: 'New Lead',
-          onClick: () => {},
+          onClick: () => navigate('/leads/new'),
           icon: <Plus className="w-4 h-4 mr-2" />
         }}
         secondaryActions={
@@ -196,8 +196,13 @@ export function LeadsPage() {
                       <button className="text-frappe-text-muted hover:text-primary transition-colors p-1">
                         <MessageCircle className="w-4 h-4" />
                       </button>
-                      <button className="text-primary hover:text-primary-dark text-sm font-medium">
-                        Convert
+                      <button
+                      className="text-[#16A34A] hover:text-[#15803D] text-sm font-medium"
+                      onClick={() =>
+                      navigate(`/candidates/new?lead=${lead.id}`)
+                      }>
+                      
+                        Convert →
                       </button>
                     </div>
                   </td>

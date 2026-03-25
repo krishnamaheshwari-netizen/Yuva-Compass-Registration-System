@@ -61,26 +61,6 @@ export function FrappeSidebar() {
       path: '/cohorting'
     }]
 
-  },
-  {
-    id: 'finance',
-    label: 'Finance',
-    items: [
-    {
-      label: 'Invoices',
-      path: '/invoices'
-    }]
-
-  },
-  {
-    id: 'reports',
-    label: 'Reports',
-    items: [
-    {
-      label: 'Reports',
-      path: '/reports'
-    }]
-
   }];
 
   return (

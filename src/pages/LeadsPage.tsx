@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { FrappeToolbar } from '../components/frappe/FrappeToolbar';
@@ -13,6 +14,7 @@ import {
   UserPlus } from
 'lucide-react';
 export function LeadsPage() {
+  const navigate = useNavigate();
   const [selectedLeads, setSelectedLeads] = useState<number[]>([]);
   const leads = [
   {

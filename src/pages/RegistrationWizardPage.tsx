@@ -841,7 +841,10 @@ export function RegistrationWizardPage() {
                 Next: {step === 1 ? 'Track Details' : 'Screening'} →
               </Button> :
 
-          <Button onClick={() => alert('Registration Submitted!')}>
+          <Button
+            variant="success"
+            onClick={() => alert('Registration Submitted!')}>
+            
                 Submit Registration ✓
               </Button>
           }

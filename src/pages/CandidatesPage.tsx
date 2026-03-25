@@ -128,9 +128,9 @@ export function CandidatesPage() {
         </Card>
 
         {/* Candidates Table */}
-        <Card className="overflow-hidden">
-          <table className="min-w-full divide-y divide-frappe-border">
-            <thead className="bg-gray-50">
+        <div className="bg-white border border-[#ededed] rounded-[10px] overflow-hidden">
+          <table className="min-w-full">
+            <thead className="bg-[#f8f8f8] border-b border-[#ededed]">
               <tr>
                 <th className="px-6 py-3 text-left w-12">
                   <input
@@ -209,7 +209,26 @@ export function CandidatesPage() {
               )}
             </tbody>
           </table>
-        </Card>
+
+          {/* Pagination Footer */}
+          <div className="border-t border-[#ededed] px-4 py-2 flex items-center justify-center gap-2">
+            <button className="px-2 py-1 text-[13px] text-[#525252] hover:bg-[#f3f3f3] rounded">
+              20
+            </button>
+            <span className="text-[#7c7c7c]">|</span>
+            <button className="px-2 py-1 text-[13px] text-[#525252] hover:bg-[#f3f3f3] rounded">
+              100
+            </button>
+            <span className="text-[#7c7c7c]">|</span>
+            <button className="px-2 py-1 text-[13px] text-[#525252] hover:bg-[#f3f3f3] rounded">
+              500
+            </button>
+            <span className="text-[#7c7c7c]">|</span>
+            <button className="px-2 py-1 text-[13px] text-[#525252] hover:bg-[#f3f3f3] rounded">
+              2500
+            </button>
+          </div>
+        </div>
       </div>
 
       <BulkActionBar

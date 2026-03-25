@@ -23,25 +23,36 @@ export function FrappeSection({
     3: 'grid-cols-1 md:grid-cols-3'
   };
   return (
-    <div className={`mb-8 ${className}`}>
+    <div
+      className={`mb-6 bg-white rounded-[10px] border border-[#ededed] ${className}`}>
+      
       <div
-        className={`flex items-center justify-between py-3 border-b border-gray-200 mb-4 ${collapsible ? 'cursor-pointer hover:bg-gray-50 px-2 -mx-2 rounded' : ''}`}
+        className={`flex items-center justify-between px-4 py-3 ${collapsible ? 'cursor-pointer' : ''}`}
         onClick={() => collapsible && setIsExpanded(!isExpanded)}>
         
-        <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+        <h3
+          className="text-[16px] font-bold text-[#171717]"
+          style={{
+            letterSpacing: '0.015em'
+          }}>
+          
+          {title}
+        </h3>
         {collapsible &&
-        <button type="button" className="text-gray-500 focus:outline-none">
+        <button type="button" className="text-[#525252] focus:outline-none">
             {isExpanded ?
-          <ChevronUp className="w-5 h-5" /> :
+          <ChevronUp className="w-4 h-4" /> :
 
-          <ChevronDown className="w-5 h-5" />
+          <ChevronDown className="w-4 h-4" />
           }
           </button>
         }
       </div>
 
       {isExpanded &&
-      <div className={`grid gap-6 ${gridCols[columns]}`}>{children}</div>
+      <div className={`grid gap-4 px-4 pb-4 ${gridCols[columns]}`}>
+          {children}
+        </div>
       }
     </div>);
 
@@ -51,11 +62,5 @@ interface FrappeFormProps {
   className?: string;
 }
 export function FrappeForm({ children, className = '' }: FrappeFormProps) {
-  return (
-    <div
-      className={`bg-white rounded-[12px] shadow-sm border border-gray-200 p-6 ${className}`}>
-      
-      {children}
-    </div>);
-
+  return <div className={`space-y-4 ${className}`}>{children}</div>;
 }

@@ -44,9 +44,9 @@ export function FrappeField({
   inputType = 'text'
 }: FrappeFieldProps) {
   const labelElement =
-  <label className="text-sm font-medium text-frappe-text mb-1.5 block">
+  <label className="text-[12px] font-semibold text-[#525252] mb-1.5 block">
       {label}
-      {mandatory && <span className="text-red-500 ml-1">*</span>}
+      {mandatory && <span className="text-[#e03636] ml-1">*</span>}
     </label>;
 
   const commonProps = {
@@ -88,8 +88,11 @@ export function FrappeField({
 
       {type === 'Text' &&
       <textarea
-        className={`block w-full rounded-md shadow-sm sm:text-sm px-3 py-2 border transition-colors ${error ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-[#16A34A]'} ${commonProps.className}`}
+        className={`block w-full rounded-lg text-[14px] px-3 py-2 border bg-[#f3f3f3] transition-colors focus:outline-none ${error ? 'border-[#e03636] focus:border-[#e03636]' : 'border-[#c7c7c7] focus:border-[#0289f7]'} ${commonProps.className}`}
         rows={3}
+        style={{
+          fontWeight: 420
+        }}
         {...commonProps} />
 
       }

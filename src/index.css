@@ -8,21 +8,62 @@
 
 /* END TAILWIND IMPORTS — ALL OTHER CSS MUST GO BELOW THIS LINE */
 
-/* Frappe 16 Design System Variables */
+/* Frappe v16 Exact CSS Variables (from live desk.bundle.css) */
 :root {
-  --primary: #2490ef;
-  --primary-dark: #1976d2;
-  --text-color: #36414c;
-  --text-muted: #6c7680;
-  --bg-color: #f5f6fa;
-  --border-color: #d1d8dd;
-  --card-bg: #ffffff;
-  --sidebar-bg: #2e3338;
-  --sidebar-text: #d1d8dd;
-  --success: #28a745;
-  --warning: #ffc107;
-  --danger: #dc3545;
-  --info: #17a2b8;
+  /* Gray Scale */
+  --gray-50: #f8f8f8;
+  --gray-100: #f3f3f3;
+  --gray-200: #ededed;
+  --gray-300: #e2e2e2;
+  --gray-400: #c7c7c7;
+  --gray-500: #999999;
+  --gray-600: #7c7c7c;
+  --gray-700: #525252;
+  --gray-800: #383838;
+  --gray-900: #171717;
+  /* Semantic Colors */
+  --blue-500: #0289f7;
+  --green-500: #59ba8b;
+  --green-600: #30a66d;
+  --red-500: #e03636;
+  --orange-500: #e86c13;
+  /* Layout */
+  --sidebar-width: 220px;
+  --navbar-height: 48px;
+  --btn-height: 28px;
+  /* Typography */
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-base: 14px;
+  --text-lg: 16px;
+  --text-color: var(--gray-800);
+  --text-muted: var(--gray-700);
+  --text-light: var(--gray-600);
+  --heading-color: var(--gray-900);
+  /* Font Weights */
+  --weight-regular: 420;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  /* Spacing */
+  --margin-sm: 10px;
+  --margin-md: 15px;
+  --padding-sm: 7px;
+  --padding-md: 15px;
+  /* Border Radius */
+  --border-radius: 8px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 12px;
+  /* Surfaces */
+  --bg-color: white;
+  --control-bg: var(--gray-100);
+  --highlight-color: var(--gray-50);
+  --border-color: var(--gray-200);
+  --dark-border-color: var(--gray-300);
+  /* Buttons (Yuva Compass themed) */
+  --btn-primary: #16A34A;
+  --btn-default-bg: var(--gray-100);
+  --btn-default-hover-bg: var(--gray-300);
 }
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;

@@ -5,11 +5,11 @@ import { Modal } from '../components/ui/Modal';
 import { MultiSelect } from '../components/ui/MultiSelect';
 import { FrappeForm, FrappeSection } from '../components/frappe/FrappeForm';
 import { FrappeField } from '../components/frappe/FrappeField';
-import { WizardProgress } from '../components/frappe/WizardProgress';
+import { FrappeFormTabs } from '../components/frappe/FrappeFormTabs';
 import { FrappeToolbar } from '../components/frappe/FrappeToolbar';
-import { Search, Save, AlertTriangle, ArrowRight, X } from 'lucide-react';
+import { Search, Save, AlertTriangle, ArrowRight } from 'lucide-react';
 export function RegistrationWizardPage() {
-  const [step, setStep] = useState(0); // Start at 0 for entry point
+  const [step, setStep] = useState(0);
   const [registrationSource, setRegistrationSource] = useState<
     'lead' | 'direct' | null>(
     null);
@@ -18,9 +18,7 @@ export function RegistrationWizardPage() {
   const [showEmailSkipModal, setShowEmailSkipModal] = useState(false);
   const [lastSaved, setLastSaved] = useState<string>('Just now');
   const [selectedLead, setSelectedLead] = useState<any>(null);
-  // Form State
   const [formData, setFormData] = useState({
-    // Step 1: Common Core
     registrationDate: new Date().toISOString().split('T')[0],
     registrationPlace: 'Hub',
     district: 'Bhopal',
@@ -40,9 +38,7 @@ export function RegistrationWizardPage() {
     email: '',
     socialCategory: '',
     familyIncome: '',
-    // Gateway Question (from Pre-Reg or Direct)
     gatewayStatus: '',
-    // Step 2: Career Discovery (Student)
     cd_educationLevel: '',
     cd_currentlyEnrolled: '',
     cd_stream: '',
@@ -54,7 +50,6 @@ export function RegistrationWizardPage() {
     cd_careerClarity: '',
     cd_aspirationType: '',
     cd_mainGoal: '',
-    // Step 2: E&E (Others)
     ee_education: '',
     ee_experience: '',
     ee_income: '',
@@ -62,14 +57,12 @@ export function RegistrationWizardPage() {
     ee_mainGoals: [] as string[],
     ee_sectors: [] as string[],
     ee_sectorsOther: '',
-    // Step 3: Screening & Pathway
     testStatus: 'Appeared',
     pathwayLinkage: '',
     careerSector: '',
     careerSectorOther: '',
     careerInterests: [] as string[]
   });
-  // Auto-save simulation
   useEffect(() => {
     const timer = setInterval(() => {
       setLastSaved('30s ago');
@@ -96,11 +89,6 @@ export function RegistrationWizardPage() {
   };
   const age = calculateAge(formData.dob);
   const isAgeValid = age === '' || age >= 15 && age <= 29;
-  const handleMobileBlur = () => {
-    if (formData.mobile === '9876543210') {
-      setShowDuplicateModal(true);
-    }
-  };
   const selectLead = (lead: any) => {
     setFormData((prev) => ({
       ...prev,
@@ -276,7 +264,7 @@ export function RegistrationWizardPage() {
     }
 
       <FrappeForm>
-        <FrappeSection title="Gateway & Identification">
+        <FrappeSection title="Gateway & Identification" columns={2}>
           <div className="col-span-full mb-2 p-3 bg-blue-50 text-blue-800 text-[13px] rounded-lg flex items-center gap-2">
             <AlertTriangle className="w-4 h-4" /> This determines the
             registration track in Step 2.
@@ -296,7 +284,7 @@ export function RegistrationWizardPage() {
         
         </FrappeSection>
 
-        <FrappeSection title="Registration Details" columns={3}>
+        <FrappeSection title="Registration Details" columns={4}>
           <FrappeField
           label="Date of Registration"
           type="Date"
@@ -312,16 +300,23 @@ export function RegistrationWizardPage() {
           mandatory />
         
           <FrappeField
-          label="District / Block"
+          label="District"
           type="Data"
-          value="Bhopal / Phanda"
+          value="Bhopal"
           readOnly
-          helpText="Auto from hub mapping" />
+          helpText="Auto from hub" />
+        
+          <FrappeField
+          label="Block"
+          type="Data"
+          value="Phanda"
+          readOnly
+          helpText="Auto from hub" />
         
           <FrappeField
           label="Gram Panchayat"
           type="Select"
-          options={['GP Option 1', 'GP Option 2']}
+          options={['Phanda GP', 'Mendora GP', 'Ratua Bhainsakhedi GP']}
           value={formData.gp}
           onChange={(v) => handleInputChange('gp', v)}
           mandatory />
@@ -329,7 +324,7 @@ export function RegistrationWizardPage() {
           <FrappeField
           label="Village"
           type="Select"
-          options={['Village 1', 'Village 2']}
+          options={['Phanda', 'Mendora', 'Ratua', 'Bhainsakhedi']}
           value={formData.village}
           onChange={(v) => handleInputChange('village', v)}
           mandatory />
@@ -368,7 +363,7 @@ export function RegistrationWizardPage() {
         }
         </FrappeSection>
 
-        <FrappeSection title="Basic Details" columns={3}>
+        <FrappeSection title="Basic Details" columns={4}>
           <div className="col-span-full mb-2 p-3 bg-blue-50 text-blue-800 text-[13px] rounded-lg flex items-center gap-2">
             <AlertTriangle className="w-4 h-4" /> UID = Full Name + Mobile
             Number. Duplicate check runs on save.
@@ -440,22 +435,6 @@ export function RegistrationWizardPage() {
           } />
         
           <FrappeField
-          label="e-Mail ID"
-          type="Data"
-          inputType="email"
-          value={formData.email}
-          onChange={(v) => handleInputChange('email', v)}
-          placeholder="email@example.com" />
-        
-        </FrappeSection>
-
-        <FrappeSection
-        title="Socio-Economic Details"
-        collapsible
-        defaultExpanded
-        columns={2}>
-        
-          <FrappeField
           label="Social Category"
           type="Select"
           options={['SC', 'ST', 'OBC', 'General']}
@@ -477,6 +456,14 @@ export function RegistrationWizardPage() {
           value={formData.familyIncome}
           onChange={(v) => handleInputChange('familyIncome', v)}
           mandatory />
+        
+          <FrappeField
+          label="e-Mail ID"
+          type="Data"
+          inputType="email"
+          value={formData.email}
+          onChange={(v) => handleInputChange('email', v)}
+          placeholder="email@example.com" />
         
         </FrappeSection>
       </FrappeForm>
@@ -812,111 +799,90 @@ export function RegistrationWizardPage() {
       </FrappeForm>
     </div>;
 
-  const renderStep3 = () => {
-    useEffect(() => {
-      if (!formData.pathwayLinkage) {
-        if (formData.gatewayStatus === 'Student') {
-          handleInputChange(
-            'pathwayLinkage',
-            'Higher Education / Career Discovery'
-          );
-        } else if (
-        formData.ee_mainGoals.some(
-          (g) => g.includes('Employment') || g.includes('Job')
-        ))
-        {
-          handleInputChange('pathwayLinkage', 'Employment');
-        }
-      }
-    }, []);
-    return (
-      <div className="p-6">
-        <FrappeForm>
-          <FrappeSection
-            title="Screening Test & Pathway Assignment"
-            columns={2}>
-            
-            <FrappeField
-              label="Test Status"
-              type="Select"
-              options={['Appeared', 'Skipped']}
-              value={formData.testStatus}
-              onChange={(v) => handleInputChange('testStatus', v)}
-              readOnly
-              helpText="Auto-set on test completion" />
-            
-            <FrappeField
-              label="Pathway Linkage"
-              type="Select"
-              options={[
-              'Higher Education / Career Discovery',
-              'Employment',
-              'Entrepreneurship']
-              }
-              value={formData.pathwayLinkage}
-              onChange={(v) => handleInputChange('pathwayLinkage', v)}
-              mandatory
-              helpText="Final pathway assignment" />
-            
+  const renderStep3 = () =>
+  <div className="p-6">
+      <FrappeForm>
+        <FrappeSection title="Screening Test & Pathway Assignment" columns={2}>
+          <FrappeField
+          label="Test Status"
+          type="Select"
+          options={['Appeared', 'Skipped']}
+          value={formData.testStatus}
+          onChange={(v) => handleInputChange('testStatus', v)}
+          readOnly
+          helpText="Auto-set on test completion" />
+        
+          <FrappeField
+          label="Pathway Linkage"
+          type="Select"
+          options={[
+          'Higher Education / Career Discovery',
+          'Employment',
+          'Entrepreneurship']
+          }
+          value={formData.pathwayLinkage}
+          onChange={(v) => handleInputChange('pathwayLinkage', v)}
+          mandatory
+          helpText="Final pathway assignment" />
+        
 
-            {(formData.pathwayLinkage === 'Employment' ||
-            formData.pathwayLinkage === 'Entrepreneurship') &&
-            <>
-                <FrappeField
-                label="Career Sector Chosen"
-                type="Select"
-                options={[
-                'Agriculture',
-                'Retail/Trade',
-                'Beauty & Wellness',
-                'Construction',
-                'ITeS/Computers',
-                'Healthcare',
-                'Tourism/Hospitality',
-                'Other (specify)']
-                }
-                value={formData.careerSector}
-                onChange={(v) => handleInputChange('careerSector', v)}
-                mandatory />
-              
-                {formData.careerSector === 'Other (specify)' &&
+          {(formData.pathwayLinkage === 'Employment' ||
+        formData.pathwayLinkage === 'Entrepreneurship') &&
+        <>
               <FrappeField
-                label="Please specify sector"
-                type="Data"
-                value={formData.careerSectorOther}
-                onChange={(v) => handleInputChange('careerSectorOther', v)}
-                mandatory />
-
-              }
-              </>
+            label="Career Sector Chosen"
+            type="Select"
+            options={[
+            'Agriculture',
+            'Retail/Trade',
+            'Beauty & Wellness',
+            'Construction',
+            'ITeS/Computers',
+            'Healthcare',
+            'Tourism/Hospitality',
+            'Other (specify)']
             }
+            value={formData.careerSector}
+            onChange={(v) => handleInputChange('careerSector', v)}
+            mandatory />
+          
+              {formData.careerSector === 'Other (specify)' &&
+          <FrappeField
+            label="Please specify sector"
+            type="Data"
+            value={formData.careerSectorOther}
+            onChange={(v) => handleInputChange('careerSectorOther', v)}
+            mandatory />
 
-            {formData.pathwayLinkage ===
-            'Higher Education / Career Discovery' &&
-            <FrappeField
-              label="Career Interest Areas Identified (Top 3)"
-              type="Table MultiSelect"
-              options={[
-              'Agriculture & Allied',
-              'Healthcare & Nursing',
-              'Engineering & Technology',
-              'Education & Teaching',
-              'Business & Management',
-              'Creative Arts & Design',
-              'IT & Computers',
-              'Government Services',
-              'Skilled Trades']
-              }
-              value={formData.careerInterests}
-              onChange={(v) => handleInputChange('careerInterests', v)}
-              mandatory />
+          }
+            </>
+        }
 
-            }
-          </FrappeSection>
-        </FrappeForm>
-      </div>);
+          {formData.pathwayLinkage ===
+        'Higher Education / Career Discovery' &&
+        <FrappeField
+          label="Career Interest Areas Identified (Top 3)"
+          type="Table MultiSelect"
+          options={[
+          'Agriculture & Allied',
+          'Healthcare & Nursing',
+          'Engineering & Technology',
+          'Education & Teaching',
+          'Business & Management',
+          'Creative Arts & Design',
+          'IT & Computers',
+          'Government Services',
+          'Skilled Trades']
+          }
+          value={formData.careerInterests}
+          onChange={(v) => handleInputChange('careerInterests', v)}
+          mandatory />
 
-  };
+        }
+        </FrappeSection>
+      </FrappeForm>
+    </div>;
+
   return (
     <div className="min-h-screen">
       <FrappeToolbar
@@ -949,26 +915,27 @@ export function RegistrationWizardPage() {
       {step === 0 && renderEntryPoint()}
 
       {step > 0 &&
-      <div className="p-6">
-          <div className="mb-6">
-            <WizardProgress
-            steps={[
-            {
-              id: 1,
-              label: 'Common Core'
-            },
-            {
-              id: 2,
-              label: 'Track Details'
-            },
-            {
-              id: 3,
-              label: 'Screening & Pathway'
-            }]
-            }
-            currentStep={step} />
-          
-          </div>
+      <div>
+          <FrappeFormTabs
+          steps={[
+          {
+            id: 1,
+            label: 'Common Core'
+          },
+          {
+            id: 2,
+            label: 'Track Details'
+          },
+          {
+            id: 3,
+            label: 'Screening & Pathway'
+          }]
+          }
+          currentStep={step}
+          onStepClick={(id) => {
+            if (id <= step) setStep(id);
+          }} />
+        
 
           {step === 1 && renderStep1()}
           {step === 2 &&
@@ -985,7 +952,7 @@ export function RegistrationWizardPage() {
         }
           {step === 3 && renderStep3()}
 
-          <div className="mt-8 pt-6 border-t border-[#ededed] flex items-center justify-between px-6">
+          <div className="mt-8 pt-6 border-t border-[#ededed] flex items-center justify-between px-6 pb-6">
             <Button variant="ghost" onClick={handleBackStep}>
               ← Back
             </Button>

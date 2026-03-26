@@ -61,6 +61,60 @@ export function FrappeSidebar() {
       path: '/cohorting'
     }]
 
+  },
+  {
+    id: 'finance',
+    label: 'Finance',
+    items: [
+    {
+      label: 'Invoices',
+      path: '/invoices'
+    }]
+
+  },
+  {
+    id: 'reports',
+    label: 'Reports',
+    items: [
+    {
+      label: 'Reports',
+      path: '/reports'
+    }]
+
+  },
+  {
+    id: 'masters',
+    label: 'Masters',
+    items: [
+    {
+      label: 'Hubs',
+      path: '/masters/hubs'
+    },
+    {
+      label: 'States',
+      path: '/masters/states'
+    },
+    {
+      label: 'Districts',
+      path: '/masters/districts'
+    },
+    {
+      label: 'Blocks',
+      path: '/masters/blocks'
+    },
+    {
+      label: 'Gram Panchayats',
+      path: '/masters/gp'
+    },
+    {
+      label: 'Villages',
+      path: '/masters/villages'
+    },
+    {
+      label: 'Sectors',
+      path: '/masters/sectors'
+    }]
+
   }];
 
   return (

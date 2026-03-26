@@ -4,15 +4,7 @@ import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { FrappeToolbar } from '../components/frappe/FrappeToolbar';
 import { StatusPill } from '../components/frappe/StatusPill';
-import { BulkActionBar } from '../components/frappe/BulkActionBar';
-import {
-  Search,
-  Filter,
-  Plus,
-  Phone,
-  MessageCircle,
-  UserPlus } from
-'lucide-react';
+import { Search, Filter, Plus } from 'lucide-react';
 export function LeadsPage() {
   const navigate = useNavigate();
   const [selectedLeads, setSelectedLeads] = useState<number[]>([]);
@@ -81,24 +73,50 @@ export function LeadsPage() {
   return (
     <div className="min-h-screen">
       <FrappeToolbar
-        title="Leads"
-        breadcrumbs={[
+        title={
+        selectedLeads.length > 0 ?
+        `${selectedLeads.length} of ${leads.length} selected` :
+        'Leads'
+        }
+        breadcrumbs={
+        selectedLeads.length > 0 ?
+        undefined :
+        [
         {
           label: 'Home'
         },
         {
           label: 'Leads'
         }]
+
         }
-        primaryAction={{
-          label: 'New Lead',
+        primaryAction={
+        selectedLeads.length > 0 ?
+        undefined :
+        {
+          label: '+ New Lead',
           onClick: () => navigate('/leads/new'),
           icon: <Plus className="w-4 h-4 mr-2" />
-        }}
+        }
+        }
         secondaryActions={
+        selectedLeads.length > 0 ?
+        <>
+              <Button variant="secondary" size="sm" onClick={() => {}}>
+                Mark as Contacted
+              </Button>
+              <Button variant="secondary" size="sm" onClick={() => {}}>
+                Assign Saarthi
+              </Button>
+              <Button size="sm" onClick={() => {}}>
+                Convert to Registration
+              </Button>
+            </> :
+
         <Button variant="secondary" size="sm">
-            <Filter className="w-4 h-4 mr-2" /> Filters
-          </Button>
+              <Filter className="w-4 h-4 mr-2" /> Filters
+            </Button>
+
         } />
       
 
@@ -123,7 +141,15 @@ export function LeadsPage() {
                 <th className="px-6 py-3 text-left w-12">
                   <input
                     type="checkbox"
-                    className="w-4 h-4 rounded border-frappe-border text-primary focus:ring-primary" />
+                    className="w-4 h-4 rounded border-frappe-border text-primary focus:ring-primary"
+                    checked={selectedLeads.length === leads.length}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSelectedLeads(leads.map((l) => l.id));
+                      } else {
+                        setSelectedLeads([]);
+                      }
+                    }} />
                   
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-frappe-text-muted uppercase tracking-wider">
@@ -144,9 +170,6 @@ export function LeadsPage() {
                 <th className="px-6 py-3 text-left text-xs font-semibold text-frappe-text-muted uppercase tracking-wider">
                   Days
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-semibold text-frappe-text-muted uppercase tracking-wider">
-                  Actions
-                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-frappe-border">
@@ -164,7 +187,13 @@ export function LeadsPage() {
                   
                   </td>
                   <td className="px-6 py-4">
-                    <div className="text-sm font-medium text-frappe-text">
+                    <div
+                    className="text-sm font-medium text-frappe-text hover:text-[#0289f7] cursor-pointer"
+                    style={{
+                      fontWeight: 500
+                    }}
+                    onClick={() => navigate(`/leads/${lead.id}`)}>
+                    
                       {lead.name}
                     </div>
                     <div className="text-xs text-frappe-text-muted">
@@ -190,48 +219,12 @@ export function LeadsPage() {
                       {lead.daysAgo}d ago
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <button className="text-frappe-text-muted hover:text-primary transition-colors p-1">
-                        <Phone className="w-4 h-4" />
-                      </button>
-                      <button className="text-frappe-text-muted hover:text-primary transition-colors p-1">
-                        <MessageCircle className="w-4 h-4" />
-                      </button>
-                      <button
-                      className="text-[#16A34A] hover:text-[#15803D] text-sm font-medium"
-                      onClick={() =>
-                      navigate(`/candidates/new?lead=${lead.id}`)
-                      }>
-                      
-                        Convert →
-                      </button>
-                    </div>
-                  </td>
                 </tr>
               )}
             </tbody>
           </table>
         </Card>
       </div>
-
-      <BulkActionBar
-        selectedCount={selectedLeads.length}
-        onClear={() => setSelectedLeads([])}
-        actions={
-        <>
-            <Button size="sm" variant="secondary">
-              <Phone className="w-4 h-4 mr-2" /> Call Selected
-            </Button>
-            <Button size="sm" variant="secondary">
-              <MessageCircle className="w-4 h-4 mr-2" /> Send SMS
-            </Button>
-            <Button size="sm">
-              <UserPlus className="w-4 h-4 mr-2" /> Convert to Registration
-            </Button>
-          </>
-        } />
-      
     </div>);
 
 }

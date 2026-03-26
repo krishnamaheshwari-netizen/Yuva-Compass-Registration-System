@@ -5,7 +5,7 @@ interface FrappeSectionProps {
   children: React.ReactNode;
   collapsible?: boolean;
   defaultExpanded?: boolean;
-  columns?: 1 | 2 | 3;
+  columns?: 1 | 2 | 3 | 4;
   className?: string;
 }
 export function FrappeSection({
@@ -20,14 +20,13 @@ export function FrappeSection({
   const gridCols = {
     1: 'grid-cols-1',
     2: 'grid-cols-1 md:grid-cols-2',
-    3: 'grid-cols-1 md:grid-cols-3'
+    3: 'grid-cols-1 md:grid-cols-3',
+    4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
   };
   return (
-    <div
-      className={`mb-6 bg-white rounded-[10px] border border-[#ededed] ${className}`}>
-      
+    <div className={`mb-6 ${className}`}>
       <div
-        className={`flex items-center justify-between px-4 py-3 ${collapsible ? 'cursor-pointer' : ''}`}
+        className={`flex items-center justify-between py-3 border-t border-[#ededed] first:border-t-0 ${collapsible ? 'cursor-pointer' : ''}`}
         onClick={() => collapsible && setIsExpanded(!isExpanded)}>
         
         <h3
@@ -50,9 +49,7 @@ export function FrappeSection({
       </div>
 
       {isExpanded &&
-      <div className={`grid gap-4 px-4 pb-4 ${gridCols[columns]}`}>
-          {children}
-        </div>
+      <div className={`grid gap-4 pt-4 ${gridCols[columns]}`}>{children}</div>
       }
     </div>);
 
@@ -62,5 +59,11 @@ interface FrappeFormProps {
   className?: string;
 }
 export function FrappeForm({ children, className = '' }: FrappeFormProps) {
-  return <div className={`space-y-4 ${className}`}>{children}</div>;
+  return (
+    <div
+      className={`bg-white rounded-[10px] border border-[#ededed] p-4 ${className}`}>
+      
+      {children}
+    </div>);
+
 }
